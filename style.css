@@ -1,0 +1,24 @@
+* {
+    background-color: antiquewhite;
+}
+
+#game table {
+    border: 3px blue;
+    background-color: blue;
+}
+
+#game td {
+    width: 80px;
+    height: 80px;
+    border: 2px blue;
+    border-radius: 50%;
+    background-color: antiquewhite;
+}
+
+.player1 {
+    background-color: red !important;
+}
+
+.player2 {
+    background-color: yellow !important;
+}
