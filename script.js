@@ -10,10 +10,11 @@ class Grille {
         this.grid[i][j] = new Pion();
       }
     }
-    this.player = 1;
-    this.score = { player1: 0, player2: 0 };
+    this.currentPlayer = 'Rouge';
+    this.score = { Rouge: 0, Jaune: 0 };
     this.show();
   }
+
   show() {
     let divGame = document.getElementById('game');
     divGame.innerHTML = "";
@@ -26,22 +27,22 @@ class Grille {
           this.play(j);
         });
         if (this.grid[i][j].status == 1) {
-          td.classList.add("player1");
+          td.classList.add("Rouge");
         }
         else if (this.grid[i][j].status == 2) {
-          td.classList.add("player2");
+          td.classList.add("Jaune");
         }
       }
       divGame.appendChild(table);
     }
     let tour = document.createElement('div');
     tour.classList.add('score');
-    tour.innerHTML = `Au tour du player ${this.player}`;
+    tour.innerHTML = `Au tour du joueur ${this.currentPlayer}`;
     divGame.appendChild(tour);
 
     let score = document.createElement('div');
     score.classList.add('score');
-    score.innerHTML = `player1: ${this.score.player1} | player2: ${this.score.player2}`;
+    score.innerHTML = `Rouge: ${this.score.Rouge} | Jaune: ${this.score.Jaune}`;
     divGame.appendChild(score);
 
     let resetBtn = document.createElement('button');
@@ -51,19 +52,16 @@ class Grille {
     };
     divGame.appendChild(resetBtn);
   }
+
   play(col) {
     for (let i = this.rows - 1; i >= 0; i--) {
       if (this.grid[i][col].status === 0) {
-        this.grid[i][col].status = this.player;
+        this.grid[i][col].status = this.currentPlayer === 'Rouge' ? 1 : 2;
         if (this.checkwin()) {
-          if (this.player == 1) {
-            this.score.player1++;
-          } else {
-            this.score.player2++;
-          }
-          let playerGagnant = this.player;
+          this.score[this.currentPlayer]++;
+          let joueurGagnant = this.currentPlayer;
           setTimeout(() => {
-            alert(`player ${playerGagnant} a gagné`);
+            alert(`Le joueur ${joueurGagnant} a gagné`);
           }, 50);
         }
         else if (this.checknul()) {
@@ -71,17 +69,13 @@ class Grille {
             alert("Match nul");
           }, 50);
         }
-        if (this.player == 1) {
-          this.player = 2;
-        }
-        else if (this.player == 2) {
-          this.player = 1;
-        }
+        this.currentPlayer = this.currentPlayer === 'Rouge' ? 'Jaune' : 'Rouge';
         this.show();
         return;
       }
     }
   }
+
   checkwin() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols - 3; j++) {
@@ -141,7 +135,7 @@ class Grille {
         this.grid[i][j] = new Pion();
       }
     }
-    this.player = 1;
+    this.currentPlayer = 'Rouge';
     this.show();
   }
 }

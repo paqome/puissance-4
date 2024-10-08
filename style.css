@@ -1,24 +1,95 @@
-* {
-    background-color: antiquewhite;
+:root {
+    --background-color: #f0f0f0;
+    --board-color: #3498db;
+    --cell-color: #ecf0f1;
+    --player1-color: #e74c3c;
+    --player2-color: #f1c40f;
+    --border-radius: 50%;
+    --cell-size: 80px;
+    --transition-duration: 0.3s;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#game {
+    background: var(--board-color);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 #game table {
-    border: 3px blue;
-    background-color: blue;
+    border-collapse: separate;
+    border-spacing: 5px;
 }
 
 #game td {
-    width: 80px;
-    height: 80px;
-    border: 2px blue;
-    border-radius: 50%;
-    background-color: antiquewhite;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border-radius: var(--border-radius);
+    background-color: var(--cell-color);
+    transition: background-color var(--transition-duration) ease;
+    cursor: pointer;
+}
+
+#game td:hover {
+    opacity: 0.8;
 }
 
 .player1 {
-    background-color: red !important;
+    background-color: var(--player1-color) !important;
+    box-shadow: 0 0 10px var(--player1-color);
 }
 
 .player2 {
+    background-color: var(--player2-color) !important;
+    box-shadow: 0 0 10px var(--player2-color);
+}
+
+@keyframes drop {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(0); }
+}
+
+.player1, .player2 {
+    animation: drop 0.5s ease-in;
+}
+
+#game::before {
+    content: 'Puissance 4';
+    display: block;
+    text-align: center;
+    font-size: 2em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#game::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    z-index: -1;
+    filter: blur(20px);
+    border-radius: 15px;
+}
+
+.Rouge {
+    background-color: red !important;
+}
+
+.Jaune {
     background-color: yellow !important;
 }
